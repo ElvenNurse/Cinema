@@ -4,9 +4,11 @@ import java.util.List;
 
 import mate.academy.cinema.dao.CinemaHallDao;
 import mate.academy.cinema.lib.Inject;
+import mate.academy.cinema.lib.Service;
 import mate.academy.cinema.model.CinemaHall;
 import mate.academy.cinema.service.CinemaHallService;
 
+@Service
 public class CinemaHallServiceImpl implements CinemaHallService {
     @Inject
     private static CinemaHallDao cinemaHallDao;
