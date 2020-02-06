@@ -113,18 +113,12 @@ public class Main {
         AuthenticationService authenticationService =
                 (AuthenticationService) injector.getInstance(AuthenticationService.class);
 
-        /*try {
-            LOGGER.debug(authenticationService.login(email, password));
-        } catch (AuthenticationException e) {
-            LOGGER.debug("Empty user error");
-        }*/
-
-        authenticationService.register(email, password);
+        LOGGER.debug(authenticationService.register(email, password));
 
         try {
             LOGGER.debug(authenticationService.login(email, password));
         } catch (AuthenticationException e) {
-            LOGGER.debug("Created user error");
+            LOGGER.debug("Created user login error");
         }
 
         UserService userService = (UserService) injector.getInstance(UserService.class);
