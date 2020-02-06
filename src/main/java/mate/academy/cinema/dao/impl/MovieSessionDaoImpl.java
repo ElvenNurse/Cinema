@@ -47,7 +47,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             cq.select(root).where(cb.and(predicateId, predicateDate));
             return session.createQuery(cq).getResultList();
         } catch (Exception e) {
-            throw new DataProcessingException("Can't get all movies", e);
+            throw new DataProcessingException("Can't get available movie sessions", e);
         }
     }
 }

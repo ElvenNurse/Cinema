@@ -3,13 +3,16 @@ package mate.academy.cinema;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import mate.academy.cinema.exception.AuthenticationException;
 import mate.academy.cinema.lib.Injector;
 import mate.academy.cinema.model.CinemaHall;
 import mate.academy.cinema.model.Movie;
 import mate.academy.cinema.model.MovieSession;
+import mate.academy.cinema.service.AuthenticationService;
 import mate.academy.cinema.service.CinemaHallService;
 import mate.academy.cinema.service.MovieService;
 import mate.academy.cinema.service.MovieSessionService;
+import mate.academy.cinema.service.UserService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -101,5 +104,25 @@ public class Main {
         movieSessionService.findAvailableSessions(movieLotR.getId(), LocalDate.now())
                 .forEach(LOGGER::debug);
         LOGGER.debug("Expecting " + blueSessionLotR);
+
+        LOGGER.debug("Start User test");
+
+        String email = "voland92@ukr.net";
+        String password = "123";
+
+        AuthenticationService authenticationService =
+                (AuthenticationService) injector.getInstance(AuthenticationService.class);
+
+        LOGGER.debug(authenticationService.register(email, password));
+
+        try {
+            LOGGER.debug(authenticationService.login(email, password));
+        } catch (AuthenticationException e) {
+            LOGGER.debug("Created user login error");
+        }
+
+        UserService userService = (UserService) injector.getInstance(UserService.class);
+
+        LOGGER.debug(userService.findByEmail("voland92@ukr.net"));
     }
 }

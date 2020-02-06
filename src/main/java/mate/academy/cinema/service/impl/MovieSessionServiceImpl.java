@@ -5,9 +5,11 @@ import java.util.List;
 
 import mate.academy.cinema.dao.MovieSessionDao;
 import mate.academy.cinema.lib.Inject;
+import mate.academy.cinema.lib.Service;
 import mate.academy.cinema.model.MovieSession;
 import mate.academy.cinema.service.MovieSessionService;
 
+@Service
 public class MovieSessionServiceImpl implements MovieSessionService {
     @Inject
     private static MovieSessionDao movieSessionDao;
