@@ -13,6 +13,7 @@
         <property name="format_sql">true</property>
         <property name="hibernate.hbm2ddl.auto">create-drop</property>
 
+        <mapping class="mate.academy.cinema.model.Order"/>
         <mapping class="mate.academy.cinema.model.Movie"/>
         <mapping class="mate.academy.cinema.model.CinemaHall"/>
         <mapping class="mate.academy.cinema.model.MovieSession"/>

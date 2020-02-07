@@ -13,6 +13,7 @@ import mate.academy.cinema.service.AuthenticationService;
 import mate.academy.cinema.service.CinemaHallService;
 import mate.academy.cinema.service.MovieService;
 import mate.academy.cinema.service.MovieSessionService;
+import mate.academy.cinema.service.OrderService;
 import mate.academy.cinema.service.ShoppingCartService;
 import mate.academy.cinema.service.UserService;
 import org.apache.logging.log4j.LogManager;
@@ -134,9 +135,26 @@ public class Main {
                 (ShoppingCartService) injector.getInstance(ShoppingCartService.class);
 
         LOGGER.debug(shoppingCartService.getByUser(user));
+
         shoppingCartService.addSession(redSessionFF, user);
         LOGGER.debug(shoppingCartService.getByUser(user));
+
         shoppingCartService.addSession(blueSessionLotR, user);
         LOGGER.debug(shoppingCartService.getByUser(user));
+
+        LOGGER.debug("Order test");
+
+        OrderService orderService = (OrderService) injector.getInstance(OrderService.class);
+
+        orderService.getOrderHistory(user).forEach(LOGGER::debug);
+
+        orderService.completeOrder(user);
+        orderService.getOrderHistory(user).forEach(LOGGER::debug);
+
+        shoppingCartService.addSession(redSessionSW, user);
+        shoppingCartService.addSession(greenSessionFF, user);
+
+        orderService.completeOrder(user);
+        orderService.getOrderHistory(user).forEach(LOGGER::debug);
     }
 }
