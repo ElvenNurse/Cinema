@@ -38,7 +38,7 @@ public class UserDaoImpl implements UserDao {
             CriteriaQuery<User> cq = cb.createQuery(User.class);
             Root<User> root = cq.from(User.class);
             cq.select(root).where(cb.equal(root.get("email"), email));
-            return session.createQuery(cq).getSingleResult();
+            return session.createQuery(cq).uniqueResult();
         } catch (Exception e) {
             throw new DataProcessingException("Can't get User by email", e);
         }

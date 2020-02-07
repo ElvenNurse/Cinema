@@ -5,11 +5,14 @@ import mate.academy.cinema.lib.Inject;
 import mate.academy.cinema.lib.Service;
 import mate.academy.cinema.model.User;
 import mate.academy.cinema.service.AuthenticationService;
+import mate.academy.cinema.service.ShoppingCartService;
 import mate.academy.cinema.service.UserService;
 import mate.academy.cinema.util.HashUtil;
 
 @Service
 public class AuthenticationServiceImpl implements AuthenticationService {
+    @Inject
+    private static ShoppingCartService shoppingCartService;
     @Inject
     private static UserService userService;
 
@@ -30,6 +33,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         User newUser = new User();
         newUser.setEmail(email);
         newUser.setPassword(password);
-        return userService.add(newUser);
+        User userFromDb = userService.add(newUser);
+        shoppingCartService.registerNewShoppingCart(userFromDb);
+        return userFromDb;
     }
 }
