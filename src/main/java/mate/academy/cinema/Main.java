@@ -8,10 +8,12 @@ import mate.academy.cinema.lib.Injector;
 import mate.academy.cinema.model.CinemaHall;
 import mate.academy.cinema.model.Movie;
 import mate.academy.cinema.model.MovieSession;
+import mate.academy.cinema.model.User;
 import mate.academy.cinema.service.AuthenticationService;
 import mate.academy.cinema.service.CinemaHallService;
 import mate.academy.cinema.service.MovieService;
 import mate.academy.cinema.service.MovieSessionService;
+import mate.academy.cinema.service.ShoppingCartService;
 import mate.academy.cinema.service.UserService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -123,6 +125,18 @@ public class Main {
 
         UserService userService = (UserService) injector.getInstance(UserService.class);
 
-        LOGGER.debug(userService.findByEmail("voland92@ukr.net"));
+        User user = userService.findByEmail("voland92@ukr.net");
+        LOGGER.debug(user);
+
+        LOGGER.debug("Shopping Cart test");
+
+        ShoppingCartService shoppingCartService =
+                (ShoppingCartService) injector.getInstance(ShoppingCartService.class);
+
+        LOGGER.debug(shoppingCartService.getByUser(user));
+        shoppingCartService.addSession(redSessionFF, user);
+        LOGGER.debug(shoppingCartService.getByUser(user));
+        shoppingCartService.addSession(blueSessionLotR, user);
+        LOGGER.debug(shoppingCartService.getByUser(user));
     }
 }
