@@ -1,15 +1,14 @@
 package mate.academy.cinema.dao.impl;
 
-import java.util.List;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Root;
 
 import mate.academy.cinema.dao.ShoppingCartDao;
 import mate.academy.cinema.exception.DataProcessingException;
 import mate.academy.cinema.lib.Dao;
 import mate.academy.cinema.model.ShoppingCart;
-import mate.academy.cinema.model.Ticket;
 import mate.academy.cinema.model.User;
 import mate.academy.cinema.util.HibernateUtil;
 import org.hibernate.Session;
@@ -40,16 +39,9 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
             CriteriaBuilder cb = session.getCriteriaBuilder();
             CriteriaQuery<ShoppingCart> cq = cb.createQuery(ShoppingCart.class);
             Root<ShoppingCart> root = cq.from(ShoppingCart.class);
+            root.fetch("tickets", JoinType.LEFT);
             cq.select(root).where(cb.equal(root.get("user"), user));
-            ShoppingCart shoppingCart = session.createQuery(cq).getSingleResult();
-
-            List<Ticket> tickets = session
-                    .createQuery("FROM Ticket WHERE user = :user", Ticket.class)
-                    .setParameter("user", user)
-                    .getResultList();
-
-            shoppingCart.setTickets(tickets);
-            return shoppingCart;
+            return session.createQuery(cq).uniqueResult();
         } catch (Exception e) {
             throw new DataProcessingException("Can't get Shopping Cart by user", e);
         }
