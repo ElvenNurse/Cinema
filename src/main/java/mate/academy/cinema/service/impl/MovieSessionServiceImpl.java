@@ -12,7 +12,7 @@ import mate.academy.cinema.service.MovieSessionService;
 @Service
 public class MovieSessionServiceImpl implements MovieSessionService {
     @Inject
-    private static MovieSessionDao movieSessionDao;
+    private MovieSessionDao movieSessionDao;
 
     @Override
     public MovieSession add(MovieSession session) {

@@ -1,5 +1,7 @@
 package mate.academy.cinema.service.impl;
 
+import java.util.Collections;
+
 import mate.academy.cinema.dao.ShoppingCartDao;
 import mate.academy.cinema.dao.TicketDao;
 import mate.academy.cinema.lib.Inject;
@@ -13,9 +15,9 @@ import mate.academy.cinema.service.ShoppingCartService;
 @Service
 public class ShoppingCartServiceImpl implements ShoppingCartService {
     @Inject
-    private static ShoppingCartDao shoppingCartDao;
+    private ShoppingCartDao shoppingCartDao;
     @Inject
-    private static TicketDao ticketDao;
+    private TicketDao ticketDao;
 
     @Override
     public void addSession(MovieSession movieSession, User user) {
@@ -39,5 +41,11 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         ShoppingCart shoppingCart = new ShoppingCart();
         shoppingCart.setUser(user);
         shoppingCartDao.add(shoppingCart);
+    }
+
+    @Override
+    public void clearShoppingCart(ShoppingCart shoppingCart) {
+        shoppingCart.setTickets(Collections.emptyList());
+        shoppingCartDao.update(shoppingCart);
     }
 }
