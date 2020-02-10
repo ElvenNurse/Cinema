@@ -11,7 +11,7 @@ import mate.academy.cinema.service.CinemaHallService;
 @Service
 public class CinemaHallServiceImpl implements CinemaHallService {
     @Inject
-    private static CinemaHallDao cinemaHallDao;
+    private CinemaHallDao cinemaHallDao;
 
     @Override
     public CinemaHall add(CinemaHall cinemaHall) {
