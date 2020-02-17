@@ -1,23 +1,30 @@
 package mate.academy.cinema.dao.impl;
 
 import java.util.List;
-
 import javax.persistence.criteria.CriteriaQuery;
 
 import mate.academy.cinema.dao.CinemaHallDao;
 import mate.academy.cinema.exception.DataProcessingException;
-import mate.academy.cinema.lib.Dao;
 import mate.academy.cinema.model.CinemaHall;
-import mate.academy.cinema.util.HibernateUtil;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
-@Dao
+@Repository
 public class CinemaHallDaoImpl implements CinemaHallDao {
+    private SessionFactory sessionFactory;
+
+    @Autowired
+    public CinemaHallDaoImpl(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
+
     @Override
     public CinemaHall add(CinemaHall cinemaHall) {
         Transaction transaction = null;
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
             Long cinemaHallId = (Long) session.save(cinemaHall);
             transaction.commit();
@@ -33,7 +40,7 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
 
     @Override
     public List<CinemaHall> getAll() {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = sessionFactory.openSession()) {
             CriteriaQuery<CinemaHall> criteriaQuery = session.getCriteriaBuilder()
                     .createQuery(CinemaHall.class);
             criteriaQuery.from(CinemaHall.class);

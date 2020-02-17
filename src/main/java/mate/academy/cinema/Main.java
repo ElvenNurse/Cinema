@@ -3,8 +3,8 @@ package mate.academy.cinema;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import mate.academy.cinema.config.AppConfig;
 import mate.academy.cinema.exception.AuthenticationException;
-import mate.academy.cinema.lib.Injector;
 import mate.academy.cinema.model.CinemaHall;
 import mate.academy.cinema.model.Movie;
 import mate.academy.cinema.model.MovieSession;
@@ -18,16 +18,17 @@ import mate.academy.cinema.service.ShoppingCartService;
 import mate.academy.cinema.service.UserService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 public class Main {
     private static final Logger LOGGER = LogManager.getLogger(Main.class);
 
-    private static Injector injector = Injector.getInstance("mate.academy.cinema");
-
     public static void main(String[] args) {
+        AnnotationConfigApplicationContext context =
+                new AnnotationConfigApplicationContext(AppConfig.class);
         LOGGER.debug("Start Movie test");
 
-        MovieService movieService = (MovieService) injector.getInstance(MovieService.class);
+        MovieService movieService = context.getBean(MovieService.class);
 
         movieService.getAll().forEach(LOGGER::debug);
 
@@ -47,8 +48,7 @@ public class Main {
 
         LOGGER.debug("Start Cinema Hall test");
 
-        CinemaHallService cinemaHallService =
-                (CinemaHallService) injector.getInstance(CinemaHallService.class);
+        CinemaHallService cinemaHallService = context.getBean(CinemaHallService.class);
 
         cinemaHallService.getAll().forEach(LOGGER::debug);
 
@@ -69,7 +69,7 @@ public class Main {
         LOGGER.debug("Start Movie Session test");
 
         MovieSessionService movieSessionService =
-                (MovieSessionService) injector.getInstance(MovieSessionService.class);
+                context.getBean(MovieSessionService.class);
 
         movieSessionService.findAvailableSessions(movieFF.getId(), LocalDate.now())
                 .forEach(LOGGER::debug);
@@ -114,7 +114,7 @@ public class Main {
         String password = "123";
 
         AuthenticationService authenticationService =
-                (AuthenticationService) injector.getInstance(AuthenticationService.class);
+                context.getBean(AuthenticationService.class);
 
         LOGGER.debug(authenticationService.register(email, password));
 
@@ -124,7 +124,7 @@ public class Main {
             LOGGER.debug("Created user login error");
         }
 
-        UserService userService = (UserService) injector.getInstance(UserService.class);
+        UserService userService = context.getBean(UserService.class);
 
         User user = userService.findByEmail("voland92@ukr.net");
         LOGGER.debug(user);
@@ -132,7 +132,7 @@ public class Main {
         LOGGER.debug("Shopping Cart test");
 
         ShoppingCartService shoppingCartService =
-                (ShoppingCartService) injector.getInstance(ShoppingCartService.class);
+                context.getBean(ShoppingCartService.class);
 
         LOGGER.debug(shoppingCartService.getByUser(user));
 
@@ -144,7 +144,7 @@ public class Main {
 
         LOGGER.debug("Order test");
 
-        OrderService orderService = (OrderService) injector.getInstance(OrderService.class);
+        OrderService orderService = context.getBean(OrderService.class);
 
         orderService.getOrderHistory(user).forEach(LOGGER::debug);
 

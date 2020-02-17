@@ -2,18 +2,26 @@ package mate.academy.cinema.dao.impl;
 
 import mate.academy.cinema.dao.TicketDao;
 import mate.academy.cinema.exception.DataProcessingException;
-import mate.academy.cinema.lib.Dao;
 import mate.academy.cinema.model.Ticket;
-import mate.academy.cinema.util.HibernateUtil;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
-@Dao
+@Repository
 public class TicketDaoImpl implements TicketDao {
+    private SessionFactory sessionFactory;
+
+    @Autowired
+    public TicketDaoImpl(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
+
     @Override
     public Ticket add(Ticket ticket) {
         Transaction transaction = null;
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
             Long ticketId = (Long) session.save(ticket);
             transaction.commit();
