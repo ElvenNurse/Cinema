@@ -4,20 +4,24 @@ import java.util.Collections;
 
 import mate.academy.cinema.dao.ShoppingCartDao;
 import mate.academy.cinema.dao.TicketDao;
-import mate.academy.cinema.lib.Inject;
-import mate.academy.cinema.lib.Service;
 import mate.academy.cinema.model.MovieSession;
 import mate.academy.cinema.model.ShoppingCart;
 import mate.academy.cinema.model.Ticket;
 import mate.academy.cinema.model.User;
 import mate.academy.cinema.service.ShoppingCartService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service
 public class ShoppingCartServiceImpl implements ShoppingCartService {
-    @Inject
     private ShoppingCartDao shoppingCartDao;
-    @Inject
     private TicketDao ticketDao;
+
+    @Autowired
+    public ShoppingCartServiceImpl(ShoppingCartDao shoppingCartDao, TicketDao ticketDao) {
+        this.shoppingCartDao = shoppingCartDao;
+        this.ticketDao = ticketDao;
+    }
 
     @Override
     public void addSession(MovieSession movieSession, User user) {

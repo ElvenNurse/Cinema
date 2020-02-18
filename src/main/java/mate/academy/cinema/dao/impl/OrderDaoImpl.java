@@ -1,7 +1,6 @@
 package mate.academy.cinema.dao.impl;
 
 import java.util.List;
-
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.JoinType;
@@ -9,20 +8,27 @@ import javax.persistence.criteria.Root;
 
 import mate.academy.cinema.dao.OrderDao;
 import mate.academy.cinema.exception.DataProcessingException;
-import mate.academy.cinema.lib.Dao;
 import mate.academy.cinema.model.Order;
 import mate.academy.cinema.model.User;
-import mate.academy.cinema.util.HibernateUtil;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
-@Dao
+@Repository
 public class OrderDaoImpl implements OrderDao {
+    private SessionFactory sessionFactory;
+
+    @Autowired
+    public OrderDaoImpl(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
 
     @Override
     public Order add(Order order) {
         Transaction transaction = null;
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
             Long orderId = (Long) session.save(order);
             transaction.commit();
@@ -38,7 +44,7 @@ public class OrderDaoImpl implements OrderDao {
 
     @Override
     public List<Order> getUserOrders(User user) {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = sessionFactory.openSession()) {
             CriteriaBuilder cb = session.getCriteriaBuilder();
             CriteriaQuery<Order> cq = cb.createQuery(Order.class);
             Root<Order> root = cq.from(Order.class);
