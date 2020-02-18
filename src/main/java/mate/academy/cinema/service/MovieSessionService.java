@@ -8,5 +8,7 @@ import mate.academy.cinema.model.MovieSession;
 public interface MovieSessionService {
     MovieSession add(MovieSession session);
 
+    MovieSession getById(Long id);
+
     List<MovieSession> findAvailableSessions(Long movieId, LocalDate date);
 }

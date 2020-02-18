@@ -43,6 +43,15 @@ public class OrderDaoImpl implements OrderDao {
     }
 
     @Override
+    public Order getById(Long id) {
+        try (Session session = sessionFactory.openSession()) {
+            return session.get(Order.class, id);
+        } catch (Exception e) {
+            throw new DataProcessingException("Can't get Order by ID", e);
+        }
+    }
+
+    @Override
     public List<Order> getUserOrders(User user) {
         try (Session session = sessionFactory.openSession()) {
             CriteriaBuilder cb = session.getCriteriaBuilder();
@@ -53,6 +62,18 @@ public class OrderDaoImpl implements OrderDao {
             return session.createQuery(cq).getResultList();
         } catch (Exception e) {
             throw new DataProcessingException("Can't get user Orders", e);
+        }
+    }
+
+    @Override
+    public List<Order> getAll() {
+        try (Session session = sessionFactory.openSession()) {
+            CriteriaQuery<Order> criteriaQuery = session.getCriteriaBuilder()
+                    .createQuery(Order.class);
+            criteriaQuery.from(Order.class).fetch("tickets", JoinType.LEFT);
+            return session.createQuery(criteriaQuery).getResultList();
+        } catch (Exception e) {
+            throw new DataProcessingException("Can't get all Orders", e);
         }
     }
 }

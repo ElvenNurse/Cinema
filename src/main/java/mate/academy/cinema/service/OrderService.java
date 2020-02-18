@@ -8,5 +8,9 @@ import mate.academy.cinema.model.User;
 public interface OrderService {
     Order completeOrder(User user);
 
+    Order getById(Long id);
+
     List<Order> getOrderHistory(User user);
+
+    List<Order> getAll();
 }

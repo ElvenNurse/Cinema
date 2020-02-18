@@ -40,6 +40,15 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
+    public User getById(Long id) {
+        try (Session session = sessionFactory.openSession()) {
+            return session.get(User.class, id);
+        } catch (Exception e) {
+            throw new DataProcessingException("Can't get User by ID", e);
+        }
+    }
+
+    @Override
     public User findByEmail(String email) {
         try (Session session = sessionFactory.openSession()) {
             CriteriaBuilder cb = session.getCriteriaBuilder();
