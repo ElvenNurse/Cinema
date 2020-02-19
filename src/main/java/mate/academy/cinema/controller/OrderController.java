@@ -5,8 +5,10 @@ import java.util.stream.Collectors;
 
 import mate.academy.cinema.dto.request.OrderRequestDto;
 import mate.academy.cinema.dto.response.OrderResponseDto;
-import mate.academy.cinema.dto.response.TicketResponseMapper;
+import mate.academy.cinema.dto.response.TicketResponseDto;
+import mate.academy.cinema.model.MovieSession;
 import mate.academy.cinema.model.Order;
+import mate.academy.cinema.model.Ticket;
 import mate.academy.cinema.service.OrderService;
 import mate.academy.cinema.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,14 +23,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class OrderController {
     private OrderService orderService;
     private UserService userService;
-    private TicketResponseMapper ticketResponseMapper;
 
     @Autowired
     public OrderController(OrderService orderService,
-                           UserService userService, TicketResponseMapper ticketResponseMapper) {
+                           UserService userService) {
         this.orderService = orderService;
         this.userService = userService;
-        this.ticketResponseMapper = ticketResponseMapper;
     }
 
     @PostMapping("/complete")
@@ -49,8 +49,19 @@ public class OrderController {
         responseDto.setOrderDate(order.getOrderDate().toString());
         responseDto.setTickets(order.getTickets()
                 .stream()
-                .map(ticketResponseMapper::getResponseDto)
+                .map(this::getResponseDto)
                 .collect(Collectors.toList()));
+        return responseDto;
+    }
+
+    private TicketResponseDto getResponseDto(Ticket ticket) {
+        TicketResponseDto responseDto = new TicketResponseDto();
+        responseDto.setUserEmail(ticket.getUser().getEmail());
+        MovieSession movieSession = ticket.getMovieSession();
+        responseDto.setMovieSessionId(movieSession.getId());
+        responseDto.setMovieTitle(movieSession.getMovie().getTitle());
+        responseDto.setCinemaHallId(movieSession.getCinemaHall().getId());
+        responseDto.setShowTime(movieSession.getShowTime().toString());
         return responseDto;
     }
 }
