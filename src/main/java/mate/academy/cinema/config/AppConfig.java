@@ -23,7 +23,8 @@ import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 @PropertySource("classpath:db.properties")
 @ComponentScan(basePackages = {
         "mate.academy.cinema.dao",
-        "mate.academy.cinema.service"
+        "mate.academy.cinema.service",
+        "mate.academy.cinema.dto"
 })
 public class AppConfig {
     private Environment environment;
