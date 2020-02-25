@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.validation.Valid;
+
 import mate.academy.cinema.dto.request.MovieSessionRequestDto;
 import mate.academy.cinema.dto.response.MovieSessionResponseDto;
 import mate.academy.cinema.model.MovieSession;
@@ -36,8 +38,7 @@ public class MovieSessionController {
     }
 
     @PostMapping
-    public void addMovieSession(
-            @RequestBody MovieSessionRequestDto requestDto) {
+    public void addMovieSession(@Valid @RequestBody MovieSessionRequestDto requestDto) {
         movieSessionService.add(this.getFromDto(requestDto));
     }
 

@@ -1,5 +1,7 @@
 package mate.academy.cinema.controller;
 
+import javax.validation.Valid;
+
 import mate.academy.cinema.dto.request.UserRequestDto;
 import mate.academy.cinema.exception.AuthenticationException;
 import mate.academy.cinema.service.AuthenticationService;
@@ -33,7 +35,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/register")
-    public void register(@RequestBody UserRequestDto requestDto) {
+    public void register(@Valid @RequestBody UserRequestDto requestDto) {
         authenticationService.register(requestDto.getEmail(), requestDto.getPassword());
     }
 }

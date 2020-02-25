@@ -3,13 +3,6 @@ package mate.academy.cinema.config;
 import java.util.Properties;
 import javax.sql.DataSource;
 
-import mate.academy.cinema.model.CinemaHall;
-import mate.academy.cinema.model.Movie;
-import mate.academy.cinema.model.MovieSession;
-import mate.academy.cinema.model.Order;
-import mate.academy.cinema.model.ShoppingCart;
-import mate.academy.cinema.model.Ticket;
-import mate.academy.cinema.model.User;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -24,7 +17,7 @@ import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 @ComponentScan(basePackages = {
         "mate.academy.cinema.dao",
         "mate.academy.cinema.service",
-        "mate.academy.cinema.dto"
+        "mate.academy.cinema.security"
 })
 public class AppConfig {
     private Environment environment;
@@ -58,15 +51,7 @@ public class AppConfig {
                 environment.getProperty("hibernate.hbm2ddl.auto"));
         sessionFactoryBean.setHibernateProperties(properties);
 
-        sessionFactoryBean.setAnnotatedClasses(
-                CinemaHall.class,
-                Movie.class,
-                MovieSession.class,
-                Order.class,
-                ShoppingCart.class,
-                Ticket.class,
-                User.class
-        );
+        sessionFactoryBean.setPackagesToScan("mate.academy.cinema.model");
 
         return sessionFactoryBean;
     }

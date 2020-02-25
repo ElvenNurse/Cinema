@@ -1,9 +1,9 @@
 package mate.academy.cinema.controller;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import mate.academy.cinema.dto.request.OrderRequestDto;
 import mate.academy.cinema.dto.response.OrderResponseDto;
 import mate.academy.cinema.dto.response.TicketResponseDto;
 import mate.academy.cinema.model.MovieSession;
@@ -14,9 +14,7 @@ import mate.academy.cinema.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -33,13 +31,13 @@ public class OrderController {
     }
 
     @PostMapping("/complete")
-    public void completeOrder(@RequestBody OrderRequestDto requestDto) {
-        orderService.completeOrder(userService.getById(requestDto.getUserId()));
+    public void completeOrder(Principal principal) {
+        orderService.completeOrder(userService.findByEmail(principal.getName()));
     }
 
     @GetMapping
-    public List<OrderResponseDto> getOrderHistory(@RequestParam Long userId) {
-        return orderService.getOrderHistory(userService.getById(userId))
+    public List<OrderResponseDto> getOrderHistory(Principal principal) {
+        return orderService.getOrderHistory(userService.findByEmail(principal.getName()))
                 .stream()
                 .map(this::getResponseDto)
                 .collect(Collectors.toList());
