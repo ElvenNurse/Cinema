@@ -1,6 +1,8 @@
 package mate.academy.cinema.controller;
 
+import java.security.Principal;
 import java.util.stream.Collectors;
+import javax.validation.Valid;
 
 import mate.academy.cinema.dto.request.ShoppingCartRequestDto;
 import mate.academy.cinema.dto.response.ShoppingCartResponseDto;
@@ -16,7 +18,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -36,16 +37,17 @@ public class ShoppingCartController {
     }
 
     @PostMapping("/addmoviesession")
-    public void addMovieSession(@RequestBody ShoppingCartRequestDto requestDto,
-                                 @RequestParam Long userId) {
+    public void addMovieSession(@Valid @RequestBody ShoppingCartRequestDto requestDto,
+                                Principal principal) {
         shoppingCartService.addSession(
                 movieSessionService.getById(requestDto.getMovieSessionId()),
-                userService.getById(userId));
+                userService.findByEmail(principal.getName()));
     }
 
-    @GetMapping("/byuser")
-    public ShoppingCartResponseDto getByUser(@RequestParam Long userId) {
-        return getResponseDto(shoppingCartService.getByUser(userService.getById(userId)));
+    @GetMapping
+    public ShoppingCartResponseDto getByUser(Principal principal) {
+        return getResponseDto(shoppingCartService.getByUser(
+                userService.findByEmail(principal.getName())));
     }
 
     private ShoppingCartResponseDto getResponseDto(ShoppingCart shoppingCart) {
