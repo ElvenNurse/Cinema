@@ -7,12 +7,12 @@ import lombok.Data;
 
 @Data
 public class MovieSessionRequestDto {
-    @NotNull
-    @Positive
+    @NotNull(message = "Movie ID can't be null")
+    @Positive(message = "Movie ID must be a positive number")
     private Long movieId;
-    @NotNull
-    @Positive
+    @NotNull(message = "Cinema Hall ID can't be null")
+    @Positive(message = "Cinema Hall ID must be a positive number")
     private Long cinemaHallId;
-    @NotNull
+    @NotNull(message = "Show Time can't be null")
     private String showTime;
 }
