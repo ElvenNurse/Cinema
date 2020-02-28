@@ -10,13 +10,13 @@ import mate.academy.cinema.util.PasswordMatchValidation;
 @Data
 @PasswordMatchValidation
 public class UserRequestDto {
-    @NotNull
+    @NotNull(message = "Email can't be null")
     @EmailValidation
     private String email;
-    @NotNull
-    @Size(min = 4)
+    @NotNull(message = "Password can't be null")
+    @Size(min = 4, message = "Password minimal length is 4 symbols")
     private String password;
-    @NotNull
-    @Size(min = 4)
+    @NotNull(message = "Password can't be null")
+    @Size(min = 4, message = "Password minimal length is 4 symbols")
     private String repeatPassword;
 }

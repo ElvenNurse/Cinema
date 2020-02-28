@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 public class MovieRequestDto {
-    @NotNull
+    @NotNull(message = "Title can't be null")
     private String title;
     private String description;
 }

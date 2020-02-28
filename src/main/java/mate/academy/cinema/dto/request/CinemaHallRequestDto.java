@@ -7,8 +7,8 @@ import lombok.Data;
 
 @Data
 public class CinemaHallRequestDto {
-    @NotNull
-    @Positive
+    @NotNull(message = "Capacity can't be null")
+    @Positive(message = "Capacity must be a positive number")
     private Integer capacity;
     private String description;
 }

@@ -7,7 +7,7 @@ import lombok.Data;
 
 @Data
 public class ShoppingCartRequestDto {
-    @NotNull
-    @Positive
+    @NotNull(message = "Movie Session ID can't be null")
+    @Positive(message = "Movie Session ID must be a positive number")
     private Long movieSessionId;
 }
