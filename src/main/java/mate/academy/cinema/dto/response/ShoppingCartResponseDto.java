@@ -1,7 +1,6 @@
 package mate.academy.cinema.dto.response;
 
 import java.util.List;
-
 import lombok.Data;
 
 @Data

@@ -3,7 +3,6 @@ package mate.academy.cinema.controller;
 import java.security.Principal;
 import java.util.List;
 import java.util.stream.Collectors;
-
 import mate.academy.cinema.dto.response.OrderResponseDto;
 import mate.academy.cinema.dto.response.TicketResponseDto;
 import mate.academy.cinema.model.MovieSession;

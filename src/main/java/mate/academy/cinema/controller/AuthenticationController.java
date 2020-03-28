@@ -1,7 +1,6 @@
 package mate.academy.cinema.controller;
 
 import javax.validation.Valid;
-
 import mate.academy.cinema.dto.request.UserRequestDto;
 import mate.academy.cinema.exception.AuthenticationException;
 import mate.academy.cinema.service.AuthenticationService;

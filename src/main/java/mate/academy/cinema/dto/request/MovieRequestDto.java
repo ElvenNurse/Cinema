@@ -1,7 +1,6 @@
 package mate.academy.cinema.dto.request;
 
 import javax.validation.constraints.NotNull;
-
 import lombok.Data;
 
 @Data

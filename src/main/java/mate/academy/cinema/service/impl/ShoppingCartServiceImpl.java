@@ -1,7 +1,6 @@
 package mate.academy.cinema.service.impl;
 
 import java.util.Collections;
-
 import mate.academy.cinema.dao.ShoppingCartDao;
 import mate.academy.cinema.dao.TicketDao;
 import mate.academy.cinema.model.MovieSession;

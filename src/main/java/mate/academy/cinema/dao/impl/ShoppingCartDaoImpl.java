@@ -4,7 +4,6 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Root;
-
 import mate.academy.cinema.dao.ShoppingCartDao;
 import mate.academy.cinema.exception.DataProcessingException;
 import mate.academy.cinema.model.ShoppingCart;

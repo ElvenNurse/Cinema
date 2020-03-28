@@ -1,7 +1,6 @@
 package mate.academy.cinema.service;
 
 import java.util.List;
-
 import mate.academy.cinema.model.Order;
 import mate.academy.cinema.model.User;
 

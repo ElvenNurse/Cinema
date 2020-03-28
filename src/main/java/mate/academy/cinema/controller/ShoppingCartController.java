@@ -3,7 +3,6 @@ package mate.academy.cinema.controller;
 import java.security.Principal;
 import java.util.stream.Collectors;
 import javax.validation.Valid;
-
 import mate.academy.cinema.dto.request.ShoppingCartRequestDto;
 import mate.academy.cinema.dto.response.ShoppingCartResponseDto;
 import mate.academy.cinema.dto.response.TicketResponseDto;

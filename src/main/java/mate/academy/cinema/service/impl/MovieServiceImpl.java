@@ -1,7 +1,6 @@
 package mate.academy.cinema.service.impl;
 
 import java.util.List;
-
 import mate.academy.cinema.dao.MovieDao;
 import mate.academy.cinema.model.Movie;
 import mate.academy.cinema.service.MovieService;

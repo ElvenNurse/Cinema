@@ -2,7 +2,6 @@ package mate.academy.cinema.dao.impl;
 
 import java.util.List;
 import javax.persistence.criteria.CriteriaQuery;
-
 import mate.academy.cinema.dao.CinemaHallDao;
 import mate.academy.cinema.exception.DataProcessingException;
 import mate.academy.cinema.model.CinemaHall;
